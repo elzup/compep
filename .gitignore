@@ -1,3 +1,4 @@
-a.out
+node_modules
+yarn.lock
+out/
 cmake-build-debug/
-main.cpp

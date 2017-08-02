@@ -1,8 +1,68 @@
-# 競技プログラミング C++ 環境
+# compep [![Build Status](https://travis-ci.org/elzup/compep.svg?branch=master)](https://travis-ci.org/elzup/compep)
+
+> Competitive programming watch client
 
 
-デバッグ対象: main.cpp
+## Install
 
-` yarn run watch `
+```
+$ npm install compep
+```
 
-自動 build 監視
+
+## Usage
+
+```js
+const compep = require('compep');
+
+compep('unicorns');
+//=> 'unicorns & rainbows'
+```
+
+
+## API
+
+### compep(input, [options])
+
+#### input
+
+Type: `string`
+
+Lorem ipsum.
+
+#### options
+
+##### foo
+
+Type: `boolean`<br>
+Default: `false`
+
+Lorem ipsum.
+
+
+## CLI
+
+```
+$ npm install --global compep
+```
+
+```
+$ compep --help
+
+  Usage
+    compep [input]
+
+  Options
+    --foo  Lorem ipsum [Default: false]
+
+  Examples
+    $ compep
+    unicorns & rainbows
+    $ compep ponies
+    ponies & rainbows
+```
+
+
+## License
+
+MIT © [elzup](https://elzup.com)

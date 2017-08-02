@@ -1,10 +1,29 @@
 {
-  "name": "code_workspace",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "watch": "babel-node watch.js",
-    "start": "./a.out"
-  }
+	"name": "compep",
+	"version": "0.0.0",
+	"description": "Competitive programming watch client",
+	"license": "MIT",
+	"repository": "elzup/compep",
+	"author": {
+		"name": "elzup",
+		"email": "guild0105@gmail.com",
+		"url": "elzup.com"
+	},
+	"bin": "cli.js",
+	"engines": {
+		"node": ">=4"
+	},
+	"scripts": {
+		"cli": "node cli.js",
+		"test": "xo && ava"
+	},
+	"files": ["index.js", "cli.js"],
+	"keywords": ["cli-app", "cli", ""],
+	"dependencies": {
+		"meow": "^3.7.0"
+	},
+	"devDependencies": {
+		"ava": "^0.20.0",
+		"xo": "^0.18.2"
+	}
 }
