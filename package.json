@@ -1,0 +1,10 @@
+{
+  "name": "code_workspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "watch": "babel-node watch.js",
+    "start": "./a.out"
+  }
+}
