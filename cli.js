@@ -18,4 +18,4 @@ const cli = meow(`
 	  ponies & rainbows
 `)
 
-console.log(compep(cli.input[0] || 'unicorns'))
+compep(cli.input[0] || 'unicorns')
