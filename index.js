@@ -4,15 +4,13 @@ const { execSync } = require('child_process')
 require('colors')
 
 const targetFile = 'main.cpp'
-const outputFile = 'out/main.out'
+const outputDir = 'out/'
+const outputFile = `${outputDir}main.out`
 
 module.exports = (input, opts) => {
-	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
-	fs.watch(targetFile, async (event, filename) => {
-		console.log(`changed: ${filename}`)
+	function executeCommand(command) {
+		console.log(`$ ${command}`.gray)
 		try {
-			const command = `g++ ${targetFile} -o ${outputFile}`
-			console.log(`$ ${command}`.gray)
 			execSync(command)
 		} catch (err) {
 			console.log('error')
@@ -21,5 +19,29 @@ module.exports = (input, opts) => {
 				ls_stderr: err.stderr.toString(),
 			})
 		}
+	}
+
+	function prepareOutputDir(outputDir) {
+		try {
+			fs.accessSync(outputDir)
+			return true
+		} catch (err) {
+			if (err.code === 'ENOENT') {
+				console.log(`Make output directory "${outputDir}"`)
+				executeCommand(`mkdir ${outputDir}`)
+				return true
+			}
+			if (err.code === 'ENOTDIR') {
+				console.error(`${outputFile} is not directory.`.red)
+				return false
+			}
+		}
+	}
+	prepareOutputDir(outputDir)
+
+	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
+	fs.watch(targetFile, async (event, filename) => {
+		console.log(`changed: ${filename}`)
+		executeCommand(`g++ ${targetFile} -o ${outputFile}`)
 	})
 }
