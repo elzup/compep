@@ -17,17 +17,10 @@
 		"cli": "node cli.js",
 		"test": "xo && ava"
 	},
-	"files": [
-		"index.js",
-		"cli.js"
-	],
-	"keywords": [
-		"cli-app",
-		"cli",
-		""
-	],
+	"files": ["index.js", "cli.js"],
+	"keywords": ["cli-app", "cli", ""],
 	"dependencies": {
-		"colors": "^1.1.2",
+		"chalk": "^2.1.0",
 		"meow": "^3.7.0"
 	},
 	"devDependencies": {

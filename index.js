@@ -1,7 +1,7 @@
 'use strict'
 const fs = require('fs')
 const { execSync } = require('child_process')
-require('colors')
+const chalk = require('chalk')
 
 const targetFile = 'main.cpp'
 const outputDir = 'out/'
@@ -9,7 +9,7 @@ const outputFile = `${outputDir}main.out`
 
 module.exports = (input, opts) => {
 	function executeCommand(command) {
-		console.log(`$ ${command}`.gray)
+		console.log(chalk.gray(`$ ${command}`))
 		try {
 			execSync(command)
 		} catch (err) {
@@ -32,7 +32,7 @@ module.exports = (input, opts) => {
 				return true
 			}
 			if (err.code === 'ENOTDIR') {
-				console.error(`${outputFile} is not directory.`.red)
+				console.error(chalk.red(`${outputFile} is not directory.`))
 				return false
 			}
 		}
