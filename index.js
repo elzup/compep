@@ -37,7 +37,9 @@ module.exports = (input, opts) => {
 			}
 		}
 	}
-	prepareOutputDir(outputDir)
+	if (!prepareOutputDir(outputDir)) {
+		return
+	}
 
 	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
 	fs.watch(targetFile, async (event, filename) => {
