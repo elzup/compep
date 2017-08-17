@@ -6,7 +6,8 @@ const targetFile = 'main.cpp'
 const outputFile = 'out/main.out'
 
 module.exports = (input, opts) => {
-	fs.watch('main.cpp', async (event, filename) => {
+	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
+	fs.watch(targetFile, async (event, filename) => {
 		console.log(`changed: ${filename}`)
 		try {
 			execSync(`g++ ${targetFile} -o ${outputFile}`)
