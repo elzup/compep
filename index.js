@@ -1,6 +1,7 @@
 'use strict'
 const fs = require('fs')
 const { execSync } = require('child_process')
+require('colors')
 
 const targetFile = 'main.cpp'
 const outputFile = 'out/main.out'
@@ -10,7 +11,9 @@ module.exports = (input, opts) => {
 	fs.watch(targetFile, async (event, filename) => {
 		console.log(`changed: ${filename}`)
 		try {
-			execSync(`g++ ${targetFile} -o ${outputFile}`)
+			const command = `g++ ${targetFile} -o ${outputFile}`
+			console.log(`$ ${command}`.gray)
+			execSync(command)
 		} catch (err) {
 			console.log('error')
 			console.log({
