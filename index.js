@@ -73,7 +73,11 @@ module.exports = (input, opts) => {
 	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
 
 	executeCommand(`g++ ${targetFile} -o ${outputFile}`)
-	cases = loadTestcase(testcaseFile)
 	fs.watch(targetFile, compileListener)
-	fs.watch(testcaseFile, testcaseListener)
+	if (fs.existsSync(testcaseFile)) {
+		cases = loadTestcase(testcaseFile)
+		fs.watch(testcaseFile, testcaseListener)
+	} else {
+		console.log(`no testcase file ${testcaseFile}`)
+	}
 }
