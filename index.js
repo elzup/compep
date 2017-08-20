@@ -2,10 +2,27 @@
 const fs = require('fs')
 const { execSync } = require('child_process')
 const chalk = require('chalk')
+const _ = require('lodash')
 
 const targetFile = 'main.cpp'
 const outputDir = 'out/'
 const outputFile = `${outputDir}main.out`
+const testcaseDir = 'testcase/'
+const testcaseFile = `${testcaseDir}main.testcase.txt`
+
+const caseDelimiter = '\n====\n'
+const ioDelimiter = '\n----\n'
+
+function loadTestcase(file) {
+	const data = fs.readFileSync(file, 'utf-8')
+	console.log(data)
+	const caseTexts = data.split(caseDelimiter)
+	const cases = _.map(caseTexts, caseText => {
+		const [input, expect] = _.map(caseText.split(ioDelimiter), v => v.trim())
+		return { input, expect }
+	})
+	console.log(cases)
+}
 
 module.exports = (input, opts) => {
 	function executeCommand(command) {
@@ -46,4 +63,6 @@ module.exports = (input, opts) => {
 		console.log(`changed: ${filename}`)
 		executeCommand(`g++ ${targetFile} -o ${outputFile}`)
 	})
+
+	loadTestcase(testcaseFile)
 }
