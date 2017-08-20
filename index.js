@@ -3,6 +3,7 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 const chalk = require('chalk')
 const _ = require('lodash')
+const jsdiff = require('diff')
 
 const targetFile = 'main.cpp'
 const outputDir = 'out/'
@@ -19,7 +20,10 @@ function loadTestcase(file) {
 	const data = fs.readFileSync(file, 'utf-8')
 	const caseTexts = data.split(caseDelimiter)
 	const cases = _.map(caseTexts, caseText => {
-		const [input, expect] = _.map(caseText.split(ioDelimiter), v => v.trim())
+		const [input, expect] = _.map(
+			caseText.split(ioDelimiter),
+			v => v.trim() + '\n'
+		)
 		return { input, expect }
 	})
 	return cases
@@ -61,9 +65,18 @@ function runTestCase() {
 		return
 	}
 	console.log(`run ${cases.length} test`)
-	_.each(cases, testCase => {
+	_.each(cases, (testCase, i) => {
 		const res = execSync(`./${outputFile}`, { input: testCase.input })
-		console.log(res.toString('utf8'))
+		const ans = res.toString('utf8')
+		if (testCase.expect === ans) {
+			console.log(`  case ${i} ` + chalk.green('OK'))
+		} else {
+			console.log(`  case ${i} ` + chalk.red('NG'))
+			console.log(' expect:')
+			console.log(testCase.expect)
+			console.log(' received:')
+			console.log(chalk.red(ans))
+		}
 	})
 }
 
