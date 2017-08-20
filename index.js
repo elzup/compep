@@ -55,14 +55,28 @@ function prepareOutputDir(outputDir) {
 	}
 }
 
+function runTestCase() {
+	if (cases.length === 0) {
+		console.log('no TestCases')
+		return
+	}
+	console.log(`run ${cases.length} test`)
+	_.each(cases, testCase => {
+		const res = execSync(`./${outputFile}`, { input: testCase.input })
+		console.log(res.toString('utf8'))
+	})
+}
+
 const compileListener = async (event, filename) => {
 	console.log(`target changed: ${filename}`)
 	executeCommand(`g++ ${targetFile} -o ${outputFile}`)
+	runTestCase()
 }
 
 const testcaseListener = async (event, filename) => {
 	console.log(`testcase updated: ${filename}`)
 	cases = loadTestcase(testcaseFile)
+	runTestCase()
 }
 
 module.exports = (input, opts) => {
