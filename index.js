@@ -35,11 +35,9 @@ function executeCommand(command) {
 	try {
 		execSync(command)
 	} catch (err) {
-		console.log('error')
-		console.log({
-			ls_stdout: err.stdout.toString(),
-			ls_stderr: err.stderr.toString(),
-		})
+		console.log(chalk.red('Copile Error'))
+		console.log()
+		console.log(err.stderr.toString())
 		return false
 	}
 	return true
@@ -71,7 +69,7 @@ function runTestCase() {
 		console.log('Last Compile Failed')
 		return
 	}
-	console.log(`run ${cases.length} test`)
+	console.log(`---\nRunning Test (${cases.length} case)\n---\n`)
 	_.each(cases, (testCase, i) => {
 		const res = execSync(`./${outputFile}`, { input: testCase.input })
 		const ans = res.toString('utf8')
