@@ -39,7 +39,9 @@ function executeCommand(command) {
 			ls_stdout: err.stdout.toString(),
 			ls_stderr: err.stderr.toString(),
 		})
+		return false
 	}
+	return true
 }
 
 function prepareOutputDir(outputDir) {
@@ -82,7 +84,10 @@ function runTestCase() {
 
 const compileListener = async (event, filename) => {
 	console.log(`target changed: ${filename}`)
-	executeCommand(`g++ ${targetFile} -o ${outputFile}`)
+	const success = executeCommand(`g++ ${targetFile} -o ${outputFile}`)
+	if (!success) {
+		return
+	}
 	runTestCase()
 }
 
