@@ -15,6 +15,7 @@ const caseDelimiter = '\n====\n'
 const ioDelimiter = '\n----\n'
 
 let cases = []
+let compileState = false
 
 function loadTestcase(file) {
 	const data = fs.readFileSync(file, 'utf-8')
@@ -66,6 +67,10 @@ function runTestCase() {
 		console.log('no TestCases')
 		return
 	}
+	if (!compileState) {
+		console.log('Last Compile Failed')
+		return
+	}
 	console.log(`run ${cases.length} test`)
 	_.each(cases, (testCase, i) => {
 		const res = execSync(`./${outputFile}`, { input: testCase.input })
@@ -84,10 +89,7 @@ function runTestCase() {
 
 const compileListener = async (event, filename) => {
 	console.log(`target changed: ${filename}`)
-	const success = executeCommand(`g++ ${targetFile} -o ${outputFile}`)
-	if (!success) {
-		return
-	}
+	compileState = executeCommand(`g++ ${targetFile} -o ${outputFile}`)
 	runTestCase()
 }
 
