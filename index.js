@@ -115,7 +115,8 @@ function start() {
 }
 
 module.exports = (input, opts) => {
-	if (input === 'start') {
+	if (opts.init) {
+	} else {
 		start()
 	}
 }
