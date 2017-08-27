@@ -97,7 +97,7 @@ const testcaseListener = async (event, filename) => {
 	runTestCase()
 }
 
-module.exports = (input, opts) => {
+function start() {
 	if (!prepareOutputDir(outputDir)) {
 		return
 	}
@@ -111,5 +111,11 @@ module.exports = (input, opts) => {
 		fs.watch(testcaseFile, testcaseListener)
 	} else {
 		console.log(`no testcase file ${testcaseFile}`)
+	}
+}
+
+module.exports = (input, opts) => {
+	if (input === 'start') {
+		start()
 	}
 }

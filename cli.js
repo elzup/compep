@@ -6,16 +6,17 @@ const compep = require('.')
 // TODO
 const cli = meow(`
 	Usage
-	  $ compep [input]
+	  $ compep <command>
 
-	Options
-	  --foo  Lorem ipsum [Default: false]
+	Commands:
+		- start
+		- init
 
 	Examples
-	  $ compep
-	  unicorns & rainbows
-	  $ compep ponies
-	  ponies & rainbows
+	  $ compep [start]
+	  start compep watch
+	  $ compep init
+	  generate workspace
 `)
 
-compep(cli.input[0] || 'unicorns')
+compep(cli.input[0] || 'start')
