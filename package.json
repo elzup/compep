@@ -17,15 +17,8 @@
 		"cli": "node cli.js",
 		"test": "xo && ava"
 	},
-	"files": [
-		"index.js",
-		"cli.js"
-	],
-	"keywords": [
-		"cli-app",
-		"cli",
-		""
-	],
+	"files": ["index.js", "cli.js"],
+	"keywords": ["cli-app", "cli", ""],
 	"dependencies": {
 		"chalk": "^2.1.0",
 		"diff": "^3.3.0",
