@@ -43,20 +43,32 @@ function executeCommand(command) {
 	return true
 }
 
-function prepareOutputDir(outputDir) {
+function prepareDir(dir) {
 	try {
-		fs.accessSync(outputDir)
+		fs.accessSync(dir)
 		return true
 	} catch (err) {
 		if (err.code === 'ENOENT') {
-			console.log(`Make output directory "${outputDir}"`)
-			executeCommand(`mkdir ${outputDir}`)
+			console.log(`Make dir directory "${dir}"`)
+			executeCommand(`mkdir ${dir}`)
 			return true
 		}
 		if (err.code === 'ENOTDIR') {
-			console.error(chalk.red(`${outputFile} is not directory.`))
+			console.error(chalk.red(`${dir} is not directory.`))
 			return false
 		}
+	}
+}
+
+function prepareFile(path) {
+	if (!fs.existsSync(path)) {
+		console.log(`Make file "${path}"`)
+		fs.writeFileSync(path, '')
+		executeCommand(`touch ${path}`)
+		return true
+	} else if (fs.statSync(path).isDirectory()) {
+		console.error(chalk.red(`${path} is not file.`))
+		return false
 	}
 }
 
@@ -98,7 +110,10 @@ const testcaseListener = async (event, filename) => {
 }
 
 function start() {
-	if (!prepareOutputDir(outputDir)) {
+	if (!prepareDir(outputDir)) {
+		return
+	}
+	if (!prepareFile(targetFile)) {
 		return
 	}
 
@@ -114,8 +129,11 @@ function start() {
 	}
 }
 
+function init() {}
+
 module.exports = (input, opts) => {
 	if (opts.init) {
+		init()
 	} else {
 		start()
 	}
