@@ -118,12 +118,8 @@ function start() {
 
 	executeCommand(`g++ ${targetFile} -o ${outputFile}`)
 	fs.watch(targetFile, compileListener)
-	if (fs.existsSync(testcaseFile)) {
-		cases = loadTestcase(testcaseFile)
-		fs.watch(testcaseFile, testcaseListener)
-	} else {
-		console.log(`no testcase file ${testcaseFile}`)
-	}
+	cases = loadTestcase(testcaseFile)
+	fs.watch(testcaseFile, testcaseListener)
 }
 
 function init() {
