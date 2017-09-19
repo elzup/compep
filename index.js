@@ -111,7 +111,9 @@ const testcaseListener = async (event, filename) => {
 }
 
 function start() {
-	init()
+	if (!init()) {
+		return
+	}
 	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
 
 	executeCommand(`g++ ${targetFile} -o ${outputFile}`)
@@ -129,6 +131,12 @@ function init() {
 		return
 	}
 	if (!prepareFile(targetFile)) {
+		return
+	}
+	if (!prepareDir(testcaseDir)) {
+		return
+	}
+	if (!prepareFile(testcaseFile)) {
 		return
 	}
 }
