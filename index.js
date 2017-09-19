@@ -11,6 +11,10 @@ const outputFile = `${outputDir}main.out`
 const testcaseDir = 'testcase/'
 const testcaseFile = `${testcaseDir}main.testcase.txt`
 
+const templateDir = './template/'
+const templateTargetFile = `${templateDir}${targetFile}`
+const templateTestcaseFile = `${templateDir}main.testcase.txt`
+
 const caseDelimiter = '\n====\n'
 const ioDelimiter = '\n----\n'
 
@@ -61,11 +65,15 @@ function prepareDir(dir) {
 	}
 }
 
-function prepareFile(path) {
+function prepareFile(path, templateFile) {
 	if (!fs.existsSync(path)) {
 		console.log(`Make file "${path}"`)
 		fs.writeFileSync(path, '')
-		executeCommand(`touch ${path}`)
+		if (templateFile) {
+			fs.createReadStream(templateFile).pipe(fs.createWriteStream(path))
+		} else {
+			executeCommand(`touch ${path}`)
+		}
 	} else if (fs.statSync(path).isDirectory()) {
 		console.error(chalk.red(`${path} is not file.`))
 		return false
@@ -125,9 +133,9 @@ function start() {
 function init() {
 	return (
 		prepareDir(outputDir) &&
-		prepareFile(targetFile) &&
+		prepareFile(targetFile, templateTargetFile) &&
 		prepareDir(testcaseDir) &&
-		prepareFile(testcaseFile)
+		prepareFile(testcaseFile, templateTestcaseFile)
 	)
 }
 
