@@ -116,25 +116,18 @@ function start() {
 	}
 	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
 
-	executeCommand(`g++ ${targetFile} -o ${outputFile}`)
 	fs.watch(targetFile, compileListener)
 	cases = loadTestcase(testcaseFile)
 	fs.watch(testcaseFile, testcaseListener)
 }
 
 function init() {
-	if (!prepareDir(outputDir)) {
-		return
-	}
-	if (!prepareFile(targetFile)) {
-		return
-	}
-	if (!prepareDir(testcaseDir)) {
-		return
-	}
-	if (!prepareFile(testcaseFile)) {
-		return
-	}
+	return (
+		prepareDir(outputDir) &&
+		prepareFile(targetFile) &&
+		prepareDir(testcaseDir) &&
+		prepareFile(testcaseFile)
+	)
 }
 
 module.exports = (input, opts) => {
