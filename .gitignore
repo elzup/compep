@@ -2,3 +2,4 @@ node_modules
 yarn.lock
 out/
 cmake-build-debug/
+.tags*
