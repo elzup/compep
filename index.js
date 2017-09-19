@@ -99,7 +99,7 @@ function runTestCase() {
 }
 
 const compileListener = async (event, filename) => {
-	console.log(`target changed: ${filename}`)
+	event && console.log(`target changed: ${filename}`)
 	compileState = executeCommand(`g++ ${targetFile} -o ${outputFile}`)
 	runTestCase()
 }
@@ -119,6 +119,7 @@ function start() {
 	fs.watch(targetFile, compileListener)
 	cases = loadTestcase(testcaseFile)
 	fs.watch(testcaseFile, testcaseListener)
+	compileListener(null, targetFile)
 }
 
 function init() {
