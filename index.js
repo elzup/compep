@@ -32,6 +32,7 @@ function loadTestcase(file) {
 
 function executeCommand(command) {
 	console.log(chalk.gray(`$ ${command}`))
+	console.log(chalk.gray('----------------'))
 	try {
 		execSync(command)
 	} catch (err) {
@@ -65,11 +66,11 @@ function prepareFile(path) {
 		console.log(`Make file "${path}"`)
 		fs.writeFileSync(path, '')
 		executeCommand(`touch ${path}`)
-		return true
 	} else if (fs.statSync(path).isDirectory()) {
 		console.error(chalk.red(`${path} is not file.`))
 		return false
 	}
+	return true
 }
 
 function runTestCase() {
@@ -110,13 +111,7 @@ const testcaseListener = async (event, filename) => {
 }
 
 function start() {
-	if (!prepareDir(outputDir)) {
-		return
-	}
-	if (!prepareFile(targetFile)) {
-		return
-	}
-
+	init()
 	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
 
 	executeCommand(`g++ ${targetFile} -o ${outputFile}`)
@@ -129,11 +124,20 @@ function start() {
 	}
 }
 
-function init() {}
+function init() {
+	if (!prepareDir(outputDir)) {
+		return
+	}
+	if (!prepareFile(targetFile)) {
+		return
+	}
+}
 
 module.exports = (input, opts) => {
 	if (opts.init) {
-		init()
+		if (init()) {
+			console.log('Successfly workspace prepared!')
+		}
 	} else {
 		start()
 	}
