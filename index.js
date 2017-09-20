@@ -13,7 +13,7 @@ const testcaseFile = `${testcaseDir}main.testcase.txt`
 
 const templateDir = './template/'
 const templateTargetFile = `${templateDir}${targetFile}`
-const templateTestcaseFile = `${templateDir}main.testcase.txt`
+const templateTestcaseFile = `${templateDir}${testcaseFile}`
 
 const caseDelimiter = '\n====\n'
 const ioDelimiter = '\n----\n'
