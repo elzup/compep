@@ -15,7 +15,7 @@
 	},
 	"scripts": {
 		"cli": "node cli.js",
-		"test": "xo && ava"
+		"test": "ava"
 	},
 	"files": ["index.js", "cli.js"],
 	"keywords": ["cli-app", "cli", ""],
@@ -26,7 +26,8 @@
 		"meow": "^3.7.0"
 	},
 	"devDependencies": {
-		"ava": "^0.20.0",
-		"xo": "^0.18.2"
+		"ava": "^0.22.0",
+		"mock-fs": "^4.4.1",
+		"pify": "^3.0.0"
 	}
 }

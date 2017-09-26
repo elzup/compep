@@ -139,7 +139,7 @@ function init() {
 	)
 }
 
-module.exports = (input, opts) => {
+module.exports = (_, opts) => {
 	if (opts.init) {
 		if (init()) {
 			console.log('Successfly workspace prepared!')
