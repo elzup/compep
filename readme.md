@@ -2,6 +2,9 @@
 
 > Auto compile and running your C++ code. and test sample case output.
 
+![https://user-images.githubusercontent.com/2284908/31326947-8df7ad4e-ad06-11e7-99a4-ca013d5804f2.gif](https://user-images.githubusercontent.com/2284908/31326947-8df7ad4e-ad06-11e7-99a4-ca013d5804f2.gif)
+
+
 ## Usage
 1. Run the `compep`.
 
