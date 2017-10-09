@@ -11,7 +11,7 @@ const outputFile = `${outputDir}main.out`
 const testcaseDir = 'testcase/'
 const testcaseFile = `${testcaseDir}main.testcase.txt`
 
-const templateDir = './template/'
+const templateDir = __dirname + '/template/'
 const templateTargetFile = `${templateDir}${targetFile}`
 const templateTestcaseFile = `${templateDir}${testcaseFile}`
 
