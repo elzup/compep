@@ -17,13 +17,21 @@
 		"cli": "node cli.js",
 		"test": "ava"
 	},
-	"files": ["index.js", "cli.js"],
-	"keywords": ["cli-app", "cli", ""],
+	"files": [
+		"index.js",
+		"cli.js"
+	],
+	"keywords": [
+		"cli-app",
+		"cli",
+		""
+	],
 	"dependencies": {
 		"chalk": "^2.1.0",
 		"diff": "^3.3.0",
 		"lodash": "^4.17.4",
-		"meow": "^3.7.0"
+		"meow": "^3.7.0",
+		"sleep-promise": "^2.0.0"
 	},
 	"devDependencies": {
 		"ava": "^0.22.0",

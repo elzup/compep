@@ -3,7 +3,7 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 const chalk = require('chalk')
 const _ = require('lodash')
-const jsdiff = require('diff')
+const sleep = require('sleep-promise')
 
 const targetFile = 'main.cpp'
 const outputDir = 'out/'
@@ -36,7 +36,6 @@ function loadTestcase(file) {
 
 function executeCommand(command) {
 	console.log(chalk.gray(`$ ${command}`))
-	console.log(chalk.gray('----------------'))
 	try {
 		execSync(command)
 	} catch (err) {
@@ -121,10 +120,11 @@ const testcaseListener = async (event, filename) => {
 	runTestCase()
 }
 
-function start() {
+async function start() {
 	if (!init()) {
 		return
 	}
+	await sleep(500)
 	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
 
 	fs.watch(targetFile, compileListener)
