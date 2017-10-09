@@ -56,7 +56,7 @@ function prepareDir(dir) {
 		if (err.code === 'ENOENT') {
 			console.log(
 				`Make a directory ` +
-					chalk.gray(__dirname + '/') +
+					chalk.gray(process.cwd() + '/') +
 					chalk.bold(dir) +
 					'.'
 			)
@@ -73,7 +73,7 @@ function prepareDir(dir) {
 function prepareFile(path, templateFile) {
 	if (!fs.existsSync(path)) {
 		console.log(
-			`Make a file ` + chalk.gray(__dirname + '/') + chalk.bold(path) + '.'
+			`Make a file ` + chalk.gray(process.cwd() + '/') + chalk.bold(path) + '.'
 		)
 		fs.writeFileSync(path, '')
 		if (templateFile) {
