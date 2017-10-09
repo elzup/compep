@@ -90,20 +90,23 @@ function runTestCase() {
 		console.log('Last Compile Failed')
 		return
 	}
-	console.log(`---\nRunning Test (${cases.length} case)\n---\n`)
+	console.log(
+		chalk.blue(`-------------------\n- Testing (${cases.length} case)\n`)
+	)
 	_.each(cases, (testCase, i) => {
 		const res = execSync(`./${outputFile}`, { input: testCase.input })
 		const ans = res.toString('utf8')
 		if (testCase.expect === ans) {
-			console.log(`  case ${i} ` + chalk.green('OK'))
+			console.log(`  case ${i + 1} ` + chalk.green('OK'))
 		} else {
-			console.log(`  case ${i} ` + chalk.red('NG'))
+			console.log(`  case ${i + 1} ` + chalk.red('NG'))
 			console.log(' expect:')
 			console.log(testCase.expect)
 			console.log(' received:')
 			console.log(chalk.red(ans))
 		}
 	})
+	console.log(chalk.blue(`\n- Running test end\n-------------------\n`))
 }
 
 const compileListener = async (event, filename) => {
