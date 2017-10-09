@@ -21,6 +21,8 @@ const ioDelimiter = '\n----\n'
 let cases = []
 let compileState = false
 
+const header = `${chalk.green.inverse('compep')} `
+
 function loadTestcase(file) {
 	const data = fs.readFileSync(file, 'utf-8')
 	const caseTexts = data.split(caseDelimiter)
@@ -39,7 +41,7 @@ function executeCommand(command) {
 	try {
 		execSync(command)
 	} catch (err) {
-		console.log(chalk.red('Copile Error'))
+		console.log(header + chalk.red('Copile Error'))
 		console.log()
 		console.log(err.stderr.toString())
 		return false
@@ -53,12 +55,12 @@ function prepareDir(dir) {
 		return true
 	} catch (err) {
 		if (err.code === 'ENOENT') {
-			console.log(`Make dir directory "${dir}"`)
+			console.log(`${header}make directory "${dir}"`)
 			executeCommand(`mkdir ${dir}`)
 			return true
 		}
 		if (err.code === 'ENOTDIR') {
-			console.error(chalk.red(`${dir} is not directory.`))
+			console.log(header + chalk.red(`${dir} is not directory.`))
 			return false
 		}
 	}
@@ -66,7 +68,7 @@ function prepareDir(dir) {
 
 function prepareFile(path, templateFile) {
 	if (!fs.existsSync(path)) {
-		console.log(`Make file "${path}"`)
+		console.log(`${header}make file "${path}"`)
 		fs.writeFileSync(path, '')
 		if (templateFile) {
 			fs.createReadStream(templateFile).pipe(fs.createWriteStream(path))
@@ -74,7 +76,7 @@ function prepareFile(path, templateFile) {
 			executeCommand(`touch ${path}`)
 		}
 	} else if (fs.statSync(path).isDirectory()) {
-		console.error(chalk.red(`${path} is not file.`))
+		console.log(header + chalk.red(`${path} is not file.`))
 		return false
 	}
 	return true
@@ -82,11 +84,11 @@ function prepareFile(path, templateFile) {
 
 function runTestCase() {
 	if (cases.length === 0) {
-		console.log('no TestCases')
+		console.log(`${header}no TestCases`)
 		return
 	}
 	if (!compileState) {
-		console.log('Last Compile Failed')
+		console.log(`${header}Last Compile Failed`)
 		return
 	}
 	console.log(
@@ -109,13 +111,13 @@ function runTestCase() {
 }
 
 const compileListener = async (event, filename) => {
-	event && console.log(`target changed: ${filename}`)
+	event && console.log(`${header}target changed: ${filename}`)
 	compileState = executeCommand(`g++ ${targetFile} -o ${outputFile}`)
 	runTestCase()
 }
 
 const testcaseListener = async (event, filename) => {
-	console.log(`testcase updated: ${filename}`)
+	console.log(`${header}testcase updated: ${filename}`)
 	cases = loadTestcase(testcaseFile)
 	runTestCase()
 }
@@ -125,7 +127,7 @@ async function start() {
 		return
 	}
 	await sleep(500)
-	console.log(`compep watch start "${targetFile}" -> "${outputFile}"`)
+	console.log(`${header}watch start "${targetFile}" -> "${outputFile}"`)
 
 	fs.watch(targetFile, compileListener)
 	cases = loadTestcase(testcaseFile)
