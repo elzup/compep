@@ -1,4 +1,4 @@
-# compep [![Build Status](https://travis-ci.org/elzup/compep.svg?branch=master)](https://travis-ci.org/elzup/compep)
+# $ compep
 
 > Auto compile and running your C++ code. and test sample case output.
 
