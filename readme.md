@@ -66,6 +66,7 @@ $ compep --help
 
 	Options:
 		--init Generate workspace
+		--init-py Generate workspace python
 ```
 
 
