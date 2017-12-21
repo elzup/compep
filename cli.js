@@ -10,6 +10,7 @@ const cli = meow(`
 
 	Options:
 		--init Generate workspace
+		--init-py Generate workspace python
 `)
 
 compep(cli.input[0], cli.flags)
