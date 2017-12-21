@@ -15,11 +15,15 @@ const templateDir = __dirname + '/template/'
 const templateTargetFile = `${templateDir}${targetFile}`
 const templateTestcaseFile = `${templateDir}${testcaseFile}`
 
+const targetFilePython = 'main.py'
+const templateTargetFilePython = `${templateDir}${targetFilePython}`
+
 const caseDelimiter = '\n====\n'
 const ioDelimiter = '\n----\n'
 
 let cases = []
 let compileState = false
+let command
 
 function loadTestcase(file) {
 	const data = fs.readFileSync(file, 'utf-8')
@@ -27,7 +31,7 @@ function loadTestcase(file) {
 	const cases = _.map(caseTexts, caseText => {
 		const [input, expect] = _.map(
 			caseText.split(ioDelimiter),
-			v => v.trim() + '\n'
+			v => v.trim() + '\n',
 		)
 		return { input, expect }
 	})
@@ -58,7 +62,7 @@ function prepareDir(dir) {
 				`Make a directory ` +
 					chalk.gray(process.cwd() + '/') +
 					chalk.bold(dir) +
-					'.'
+					'.',
 			)
 			executeCommand(`mkdir ${dir}`)
 			return true
@@ -73,7 +77,7 @@ function prepareDir(dir) {
 function prepareFile(path, templateFile) {
 	if (!fs.existsSync(path)) {
 		console.log(
-			`Make a file ` + chalk.gray(process.cwd() + '/') + chalk.bold(path) + '.'
+			`Make a file ` + chalk.gray(process.cwd() + '/') + chalk.bold(path) + '.',
 		)
 		fs.writeFileSync(path, '')
 		if (templateFile) {
@@ -98,10 +102,10 @@ function runTestCase() {
 		return
 	}
 	console.log(
-		chalk.blue(`-------------------\n- Testing (${cases.length} case)\n`)
+		chalk.blue(`-------------------\n- Testing (${cases.length} case)\n`),
 	)
 	_.each(cases, (testCase, i) => {
-		const res = execSync(`./${outputFile}`, { input: testCase.input })
+		const res = execSync(command, { input: testCase.input })
 		const ans = res.toString('utf8')
 		if (testCase.expect === ans) {
 			console.log(`  case ${i + 1} ` + chalk.green('OK'))
@@ -128,19 +132,52 @@ const testcaseListener = async (event, filename) => {
 	runTestCase()
 }
 
+const Lang = { cpp: 'cpp', py: 'py' }
+// Check language main.cpp or main.py
+// default: cpp
+const getMode = () => {
+	if (fs.existsSync(targetFilePython)) {
+		return Lang.py
+	} else {
+		return Lang.cpp
+	}
+}
+
 async function start() {
+	const language = await getMode()
+	if (language == Lang.py) {
+		startPython()
+	} else {
+		startCpp()
+	}
+}
+
+async function startCpp() {
 	if (!init()) {
 		return
 	}
 	await sleep(500)
 	console.log(
-		'Watch start ' + chalk.bold(targetFile) + ' → ' + chalk.bold(outputFile)
+		'Watch start ' + chalk.bold(targetFile) + ' → ' + chalk.bold(outputFile),
 	)
 
+	command = `./${outputFile}`
 	fs.watch(targetFile, compileListener)
 	cases = loadTestcase(testcaseFile)
 	fs.watch(testcaseFile, testcaseListener)
 	compileListener(null, targetFile)
+}
+
+async function startPython() {
+	if (!initPython()) {
+		return
+	}
+	command = `python3 ${targetFilePython}`
+	fs.watch(targetFilePython, runTestCase)
+	cases = loadTestcase(testcaseFile)
+	fs.watch(testcaseFile, testcaseListener)
+	compileState = true
+	runTestCase()
 }
 
 function init() {
@@ -152,10 +189,22 @@ function init() {
 	)
 }
 
+function initPython() {
+	return (
+		prepareFile(targetFilePython, templateTargetFilePython) &&
+		prepareDir(testcaseDir) &&
+		prepareFile(testcaseFile, templateTestcaseFile)
+	)
+}
+
 module.exports = (_, opts) => {
 	if (opts.init) {
 		if (init()) {
 			console.log('Successfly workspace prepared!')
+		}
+	} else if (opts.initPy) {
+		if (initPython()) {
+			console.log('Successfly python workspace prepared!')
 		}
 	} else {
 		start()
