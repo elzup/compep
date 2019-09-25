@@ -15,10 +15,18 @@
 	},
 	"scripts": {
 		"cli": "node cli.js",
-		"test": "ava"
+		"test": "ava test.js"
 	},
-	"files": ["index.js", "cli.js", "template"],
-	"keywords": ["cli-app", "cli", ""],
+	"files": [
+		"index.js",
+		"cli.js",
+		"template"
+	],
+	"keywords": [
+		"cli-app",
+		"cli",
+		""
+	],
 	"dependencies": {
 		"chalk": "^2.1.0",
 		"diff": "^3.3.0",
@@ -27,7 +35,7 @@
 		"sleep-promise": "^2.0.0"
 	},
 	"devDependencies": {
-		"ava": "^0.22.0",
+		"ava": "^2.4.0",
 		"mock-fs": "^4.4.1",
 		"pify": "^3.0.0"
 	}

@@ -31,7 +31,7 @@ function loadTestcase(file) {
 	const cases = _.map(caseTexts, caseText => {
 		const [input, expect] = _.map(
 			caseText.split(ioDelimiter),
-			v => v.trim() + '\n',
+			v => v.trim() + '\n'
 		)
 		return { input, expect }
 	})
@@ -62,7 +62,7 @@ function prepareDir(dir) {
 				`Make a directory ` +
 					chalk.gray(process.cwd() + '/') +
 					chalk.bold(dir) +
-					'.',
+					'.'
 			)
 			executeCommand(`mkdir ${dir}`)
 			return true
@@ -77,7 +77,7 @@ function prepareDir(dir) {
 function prepareFile(path, templateFile) {
 	if (!fs.existsSync(path)) {
 		console.log(
-			`Make a file ` + chalk.gray(process.cwd() + '/') + chalk.bold(path) + '.',
+			`Make a file ` + chalk.gray(process.cwd() + '/') + chalk.bold(path) + '.'
 		)
 		fs.writeFileSync(path, '')
 		if (templateFile) {
@@ -102,7 +102,7 @@ function runTestCase() {
 		return
 	}
 	console.log(
-		chalk.blue(`-------------------\n- Testing (${cases.length} case)\n`),
+		chalk.blue(`-------------------\n- Testing (${cases.length} case)\n`)
 	)
 	_.each(cases, (testCase, i) => {
 		const res = execSync(command, { input: testCase.input })
@@ -158,7 +158,7 @@ async function startCpp() {
 	}
 	await sleep(500)
 	console.log(
-		'Watch start ' + chalk.bold(targetFile) + ' → ' + chalk.bold(outputFile),
+		'Watch start ' + chalk.bold(targetFile) + ' → ' + chalk.bold(outputFile)
 	)
 
 	command = `./${outputFile}`
