@@ -1,5 +1,5 @@
-import fs from 'fs'
-import test from 'ava'
+const fs = require('fs')
+const test = require('ava')
 
 const compep = require('.')
 
