@@ -35,7 +35,7 @@
 		"sleep-promise": "8.0.1"
 	},
 	"devDependencies": {
-		"ava": "2.4.0",
+		"ava": "3.3.0",
 		"mock-fs": "4.10.4",
 		"pify": "4.0.1"
 	}
