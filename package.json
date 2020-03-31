@@ -31,11 +31,11 @@
 		"chalk": "3.0.0",
 		"diff": "4.0.2",
 		"lodash": "4.17.15",
-		"meow": "6.0.1",
+		"meow": "6.1.0",
 		"sleep-promise": "8.0.1"
 	},
 	"devDependencies": {
-		"ava": "3.4.0",
+		"ava": "3.5.2",
 		"mock-fs": "4.11.0",
 		"pify": "5.0.0"
 	}
