@@ -31,7 +31,7 @@
 		"chalk": "3.0.0",
 		"diff": "4.0.2",
 		"lodash": "4.17.19",
-		"meow": "6.1.1",
+		"meow": "7.1.0",
 		"sleep-promise": "8.0.1"
 	},
 	"devDependencies": {
