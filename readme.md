@@ -1,3 +1,6 @@
+Alternative: [Tatamo/atcoder\-cli](https://github.com/Tatamo/atcoder-cli) | [online\-judge\-tools/oj](https://github.com/online-judge-tools/oj)
+
+
 # $ compep
 
 > Auto compile and running your C++, Python code. and test sample case output.
